@@ -1,0 +1,6 @@
+// config file for Visual Studio Code editor.
+{
+  "compilerOptions": {
+    "target": "ES6"
+  }
+}
