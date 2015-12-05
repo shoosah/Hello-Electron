@@ -1,6 +1,7 @@
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+//const ipc = require('ipc');
 
 // Report crashes to our server.
 electron.crashReporter.start();
@@ -38,3 +39,6 @@ app.on('ready', function() {
     mainWindow = null;
   });
 });
+
+//ipc.on('load-button-click', function(){ 
+//});

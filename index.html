@@ -2,12 +2,68 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello Electron!</title>
+    <title>Audio Player</title>
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/app.css" rel="stylesheet" type="text/css"/>
+    
+    <style>
+      #drop{
+        width: 100%;
+        height: 200px;
+        border: solid 1px #ddd;
+      }
+    </style>
+    
+
+
   </head>
   <body>
-    <h1>Hello Electron!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <h1>Audio Player</h1>
+
+    <div id="drop">
+      Drag an audio file here...
+    </div>
+
+    <script>
+      var drop = document.getElementById('drop');
+      var audio = require("./scripts/audio.js");
+      
+      drop.ondragover = function () {
+        return false;
+      };
+      
+      drop.ondragleave = drop.ondragend = function () {
+        return false;
+      };
+      
+      drop.ondrop = function (e) {
+        e.preventDefault();
+        var file = e.dataTransfer.files[0];
+        console.log('Dropped file is', file.path);
+        
+        document.getElementById("track-title").innerText = file.path;
+        
+        audio.load(file.path, function(error, source, gain){
+          if (error) throw error;
+          source.start();
+        });
+        
+        return false;
+      };
+      
+      var play = function(file){
+        
+      };
+      
+    </script>
+    
+    <div id="track-title"></div>
+    
+    <div id="info">
+      Node <script>document.write(process.versions.node)</script>,
+      Chrome <script>document.write(process.versions.chrome)</script>,
+      Electron <script>document.write(process.versions.electron)</script>.
+    </div>
   </body>
 </html>
