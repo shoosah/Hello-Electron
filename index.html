@@ -7,6 +7,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="css/app.css" rel="stylesheet" type="text/css"/>
     
+    <script src="scripts/wavesurfer.min.js" ></script>
+    
     <style>
       #drop{
         width: 100%;
@@ -15,14 +17,17 @@
       }
     </style>
     
-
-
   </head>
+  
   <body>
     <h1>Audio Player</h1>
 
     <div id="drop">
       Drag an audio file here...
+    </div>
+
+    <div id="wave">
+      
     </div>
 
     <script>
@@ -48,6 +53,14 @@
           if (error) throw error;
           source.start();
         });
+        
+        // var wavesurfer = WaveSurfer.create({
+        //     container: '#wave',
+        //     waveColor: 'violet',
+        //     progressColor: 'purple'
+        // });
+        //         
+        // wavesurfer.load(file.path);
         
         return false;
       };
