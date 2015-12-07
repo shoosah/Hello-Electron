@@ -7,11 +7,13 @@
   audioContext = new AudioContext();
   
   module.exports.load = function (url, callback) {
+    console.time("audio.load");
     // Loads an AudioBufferSourceNode ready for playback.
     //  url: The URL of the audio file to load.
     //  callback: A function to call once the audio has been loaded. `callback(error:Error, source:AudioBufferSourceNode, gain:GainNode)`
     if (!audioContext) {
       callback(new Error ("WebAudio API is not supported."));
+      console.timeEnd("audio.load");
       return;
     }
     
@@ -31,18 +33,20 @@
           source.buffer = buffer;
           source.connect(gain);
           gain.connect(audioContext.destination);
+          console.timeEnd("audio.load");
           callback(null, source, gain);
         }, 
         function(error){
+          console.timeEnd("audio.load");
           callback(error);
         });
     };
     
     request.onerror = function (error){
+      console.timeEnd("audio.load");
       callback(error);
       return;
     };
     
     request.send();
   };
-  

@@ -11,8 +11,8 @@
     
     <style>
       #drop{
-        width: 800px;
-        height: 200px;
+        width: 802px;
+        height: 202px;
         border: solid 1px #ddd;
       }
     </style>
@@ -24,10 +24,7 @@
 
     <div id="drop">
       <div id="help-text">Drag an audio file here...</div>
-    </div>
-
-    <div id="wave">
-      
+      <canvas id="wave"></canvas>
     </div>
 
     <script>
@@ -51,24 +48,17 @@
         
         audio.load(file.path, function(error, source, gain){
           if (error) throw error;          
-            source.start();
+          source.start();
+          var waveform = require("./scripts/waveform.js");
+          var canvas = document.getElementById("wave");
+          ctx = canvas.getContext('2d');
+          canvas.width = 800;
+          canvas.height = 200;
+          waveform.draw(800, 200, ctx, source.buffer, function(error){
+            document.getElementById("help-text").style.display = "none";
+          });
         });
     
-        // waveform
-        var viewer = require('waveform-viewer');
-        var wv = viewer({ samples: 800, width:800, height:200 });
-        
-  
-        var reader = new FileReader;
-        reader.addEventListener('load', function (ev) {
-          wv.appendTo('#drop');
-          document.getElementById("help-text").style.display = "none";
-          //console.log(ev.target);
-          wv.load(ev.target.result);
-        });
-        
-        reader.readAsArrayBuffer(file);
-
         return false;
         
       };
