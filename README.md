@@ -1,8 +1,16 @@
+# Hello-Electron
+
+## Installation
+
+1. Install / Update Node.js, NPM
+1. `npm install`
+1. `.\node_modules\.bin\electron .`
 
 
-h3. Links
+
+## Links
 
 https://github.com/sindresorhus/awesome-electron
 
-h3. Modules
+## Modules
 

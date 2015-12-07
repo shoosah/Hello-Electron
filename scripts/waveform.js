@@ -35,39 +35,21 @@ module.exports.draw = function (width, height, canvasctx, buffer, callback) {
       var min = 1.0;
       var max = -1.0;
       var dodraw = true;
+            
+      //scan all samples that are in a 'pixel' to find the hi and low values in the bin:
+      for (var j = 0; j < binsize; j++) {
+          var datum = showdata[(i * binsize) + j];
+          if (datum < min) min = datum;
+          if (datum > max) max = datum;
+      }
       
-      console.time("waveform.draw.slice");
-      var bin = data.slice(i * binsize, i * binsize + binsize);
-      console.timeEnd("waveform.draw.slice");
-      
-      console.log("bin.length", bin.length, binsize);
-      
-      console.time("waveform.draw.min");
-      min = Math.min.apply(null, bin);
-      console.timeEnd("waveform.draw.min");
-      
-      console.time("waveform.draw.max");
-      max = Math.max.apply(null, bin);
-      console.timeEnd("waveform.draw.max");
-      
-      //console.log(min, max);
-      
-      // //scan all samples that are in a 'pixel' to find the hi and low values in the bin:
-      // for (j = 0; j < binsize; j++) {
-      //     var datum = showdata[(i * binsize) + j];
-      //     if (datum < min) min = datum;
-      //     if (datum > max) max = datum;
-      //     if (datum === undefined) dodraw = false; //probably not needed
-      // }
-      
-      //if(dodraw){
-        var x = i;
-        var y = (1 + min) * amp;
-        var h = Math.max(1, (max - min) * amp);
-        canvasctx.lineTo(x, y);
-        canvasctx.lineTo(x, y+h);
-      //}
-  }    
+      var x = i;
+      var y = (1 + min) * amp;
+      var h = Math.max(1, (max - min) * amp);
+      canvasctx.lineTo(x, y);
+      canvasctx.lineTo(x, y+h);
+  }
+  
   canvasctx.strokeStyle = wavecolor;
   canvasctx.stroke();
   
