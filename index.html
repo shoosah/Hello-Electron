@@ -7,11 +7,11 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="css/app.css" rel="stylesheet" type="text/css"/>
     
-    <script src="scripts/wavesurfer.min.js" ></script>
+    <script src="scripts/bliss.shy.min.js" type="text/javascript"></script>
     
     <style>
       #drop{
-        width: 100%;
+        width: 800px;
         height: 200px;
         border: solid 1px #ddd;
       }
@@ -23,7 +23,7 @@
     <h1>Audio Player</h1>
 
     <div id="drop">
-      Drag an audio file here...
+      <div id="help-text">Drag an audio file here...</div>
     </div>
 
     <div id="wave">
@@ -32,7 +32,6 @@
 
     <script>
       var drop = document.getElementById('drop');
-      var audio = require("./scripts/audio.js");
       
       drop.ondragover = function () {
         return false;
@@ -43,29 +42,34 @@
       };
       
       drop.ondrop = function (e) {
+        var audio = require("./scripts/audio.js");
         e.preventDefault();
         var file = e.dataTransfer.files[0];
         console.log('Dropped file is', file.path);
         
-        document.getElementById("track-title").innerText = file.path;
+        //document.getElementById("track-title").innerText = file.path;
         
         audio.load(file.path, function(error, source, gain){
-          if (error) throw error;
-          source.start();
+          if (error) throw error;          
+            source.start();
+        });
+    
+        // waveform
+        var viewer = require('waveform-viewer');
+        var wv = viewer({ samples: 800, width:800, height:200 });
+        
+  
+        var reader = new FileReader;
+        reader.addEventListener('load', function (ev) {
+          wv.appendTo('#drop');
+          document.getElementById("help-text").style.display = "none";
+          //console.log(ev.target);
+          wv.load(ev.target.result);
         });
         
-        // var wavesurfer = WaveSurfer.create({
-        //     container: '#wave',
-        //     waveColor: 'violet',
-        //     progressColor: 'purple'
-        // });
-        //         
-        // wavesurfer.load(file.path);
-        
+        reader.readAsArrayBuffer(file);
+
         return false;
-      };
-      
-      var play = function(file){
         
       };
       

@@ -9,6 +9,7 @@
   "author": "@DanielLarsenNZ",
   "license": "MIT",
   "dependencies": {
-    "electron-prebuilt": "*" 
+    "electron-prebuilt": "~0.35.4",
+    "waveform-viewer": "~1.1.0"
   }
 }
