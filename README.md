@@ -2,7 +2,7 @@
 
 Super simple Hello World application for [electron.atom.io](http://electron.atom.io/).
 
-!(docs/screen-shot.png)
+![screen shot](./docs/screen-shot.png)
 
 
 ## Installation
